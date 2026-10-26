@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Fake News Detector</h1>
+            <p>AI-powered news classification</p>
+        </header>
+
+        <main>
+            <form action="/predict" method="POST">
+                <label for="news">Enter news text</label>
+                <textarea
+                    id="news"
+                    name="news"
+                    placeholder="Paste a news headline or article here..."
+                    required
+                >{{ news or '' }}</textarea>
+
+                <button type="submit">Check News</button>
+            </form>
+
+            {% if prediction %}
+                <div class="result">
+                    <h2>Prediction</h2>
+                    <p>{{ prediction }}</p>
+
+                    {% if confidence is not none %}
+                        <p>Model confidence: <strong>{{ confidence }}%</strong></p>
+                    {% endif %}
+
+                    <small>
+                        This is an AI prediction, not a verified fact.
+                        The model may make mistakes. Verify important
+                        claims using reliable sources.
+                    </small>
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="error">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </main>
+
+        <footer>
+            <p>Academic Machine Learning Project</p>
+        </footer>
+    </div>
+
+</body>
+</html>
